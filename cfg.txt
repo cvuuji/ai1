@@ -1,0 +1,13 @@
+#gGatherMode = 1
+
+gWorkMode = 1#1: single 2:library 3:depend input 22:cleanup dir
+
+gShowStack = 0
+gShowVPC = 0
+
+
+gSuperOperatorOn = 0
+gSimplicityOn2 = 0
+
+gMakeLogFile = 1
+gMakeLogFileName = 'lf.py'
