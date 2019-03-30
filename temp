@@ -1,0 +1,23 @@
+  1           0 LOAD_GLOBAL              0 (list)
+              2 CALL_FUNCTION            0
+              4 LOAD_GLOBAL              0 (list)
+              6 CALL_FUNCTION            0
+              8 ROT_TWO
+             10 STORE_FAST               3 (left)
+             12 STORE_FAST               4 (right)
+
+  2          14 SETUP_LOOP              46 (to 62)
+             16 LOAD_FAST                2 (dataset)
+             18 GET_ITER
+        >>   20 FOR_ITER                38 (to 60)
+             22 STORE_FAST               5 (row)
+
+  3          24 LOAD_FAST                5 (row)
+             26 LOAD_FAST                0 (index)
+             28 BINARY_SUBSCR
+             30 LOAD_FAST                1 (value)
+             32 COMPARE_OP               0 (<)
+             34 POP_JUMP_IF_FALSE       48
+ ...
+ 
+ 
