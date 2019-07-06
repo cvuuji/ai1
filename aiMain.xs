@@ -4161,14 +4161,6 @@ minInterval 10
    			   xsArraySetInt(gCardValues, i, 1000);
 		 }
 	  }
-	  if(cMyCiv == cCivBritish)
-	  {
-         for (i=0; < aiHCDeckGetNumberCards(gDefaultDeck))
-   	     {
-   		    if (kbGetTechName(aiHCDeckGetCardTechID(gDefaultDeck, i)) == "HCShipCoinCrates4")
-   			   xsArraySetInt(gCardValues, i, 898);
-		 }
-	  }
   }
 }
 
@@ -4234,7 +4226,7 @@ minInterval 10
 	int count = 0;
 	int max = 0;
 	vector v = cInvalidVector;
-	for(i=0; <2){
+	for(i=0; <3){
 		sf = getUnit(cUnitTypeLogicalTypeLandMilitary);
 		count = getUnitCountByLocation(cUnitTypeLogicalTypeLandMilitary, cMyID, cUnitStateAlive, kbUnitGetPosition(sf), 30.0);
 		if(max < count)
@@ -4881,7 +4873,7 @@ minInterval 60
       return;
    }
    
-   if((kbUnitCount(cMyID, cUnitTypeWarDog, cUnitStateAlive) < 5) && (kbResourceGet(cResourceFood) > 200))
+   if(kbUnitCount(cMyID, cUnitTypeWarDog, cUnitStateAlive) < 5)
    {
 	  aiTaskUnitTrain(getUnit(cUnitTypeExplorer),cUnitTypeWarDog);
 	  aiTaskUnitTrain(getUnit(cUnitTypeExplorer),cUnitTypeWarDog);
@@ -4894,11 +4886,13 @@ minInterval 60
    
    if(kbUnitCount(cMyID, cUnitTypeMissionary, cUnitStateAlive) < 9)
    {
-	  if(xsGetTime() > 1500000)
-	     aiTaskUnitTrain(getUnit(cUnitTypeChurch),cUnitTypeMissionary);
-	  if(kbUnitCount(cMyID, cUnitTypeFactory, cUnitStateAlive) > 1)
+	  aiTaskUnitTrain(getUnit(cUnitTypeChurch),cUnitTypeMissionary);
+	  if(xsGetTime() > 1200000 || kbUnitCount(cMyID, cUnitTypeFactory, cUnitStateAlive) > 1)
 	     aiTaskUnitTrain(getUnit(cUnitTypeChurch),cUnitTypeMissionary);
    }
+   //static int missionaryPlan = -1;
+   //if (missionaryPlan < 0)
+      //missionaryPlan = createSimpleMaintainPlan(cUnitTypeMissionary, 10, true, kbBaseGetMainID(cMyID), 2);
 }
 
 rule azManager
@@ -8217,8 +8211,8 @@ int jpHouseTry()
    
    int monkQuery = getUnit(cUnitTypeypMonkJapanese2, cMyID, cUnitStateABQ);
    monkLocation = kbUnitGetPosition(monkQuery);
-   int huntQuery = getUnitByLocation(cUnitTypeHuntable, cPlayerRelationAny, cUnitStateABQ, monkLocation, 25.0);
-   int tcQuery = getUnitByLocation(cUnitTypeTownCenter, cPlayerRelationAny, cUnitStateABQ, monkLocation, 120.0);//120
+   int huntQuery = getUnitByLocation(cUnitTypeHuntable, cPlayerRelationAny, cUnitStateABQ, monkLocation, 30.0);
+   int tcQuery = getUnitByLocation(cUnitTypeTownCenter, cPlayerRelationAny, cUnitStateABQ, monkLocation, 120.0);
    if((huntQuery < 0) || (tcQuery >= 0))
    {
       huntLocation = xsVectorSetX(huntLocation, xsVectorGetX(gFbVec));
@@ -9283,8 +9277,6 @@ minInterval 15
    int n = 65;
    if(kbGetCiv() == cCivXPAztec)
 	  n = 50;
-   if(kbGetCiv() == cCivXPSioux)
-	  n = 40;
    
    if (gNativeDancePlan < 0)
    {
@@ -9369,7 +9361,7 @@ minInterval 15
       return;
    }
    //sioux
-   if ( (cMyCiv == cCivXPSioux) && (fireDanceCheck() < 5) ) 
+   if ((cMyCiv == cCivXPSioux) && (fireDanceCheck() < 5) && (kbUnitCount(cMyID, cUnitTypeLogicalTypeLandMilitary, cUnitStateAlive) > 45)) 
    {
       aiPlanSetVariableInt(gNativeDancePlan, cNativeResearchPlanTacticID, 0, cTacticFireDance);
       lastTactic = cTacticFireDance;
@@ -10725,9 +10717,6 @@ minInterval 1
 			   (tech == cTechHCShipCaravels2) ||
 			   (tech == cTechHCPrivateers) ||
 			   (tech == cTechHCPrivateers2) ||
-			   (tech == cTechHCRoyalMint) ||
-			   (tech == cTechHCSilversmith) ||
-			   (tech == cTechHCIronmonger) ||
 			   (tech == cTechHCRobberBarons) )
 			      xsArraySetInt(gCardPriorities, i, 7);
 			   else
@@ -11028,7 +11017,7 @@ minInterval 1
 				((kbGetCiv() == cCivBritish) && (kbGetTechName(aiHCCardsGetCardTechID(card)) == "HCFencingSchool") ) ||
                 ((kbGetCiv() == cCivBritish) && (kbGetTechName(aiHCCardsGetCardTechID(card)) == "HCShipCoinCrates3") ) || //HCMusketeerGrenadierHitpointsBritishTeam
                 ((kbGetCiv() == cCivBritish) && (kbGetTechName(aiHCCardsGetCardTechID(card)) == "HCCavalryHitpointsBritish") ) ||
-                ((kbGetCiv() == cCivBritish) && (kbGetTechName(aiHCCardsGetCardTechID(card)) == "HCRoyalMint") ) ||
+                ((kbGetCiv() == cCivBritish) && (kbGetTechName(aiHCCardsGetCardTechID(card)) == "HCShipWoodCrates4") ) ||
                 ((kbGetCiv() == cCivBritish) && (kbGetTechName(aiHCCardsGetCardTechID(card)) == "HCShipCoinCrates4") ) ||
                 ((kbGetCiv() == cCivBritish) && (kbGetTechName(aiHCCardsGetCardTechID(card)) == "HCMusketeerGrenadierCombatBritish") ) ||
 				((kbGetCiv() == cCivBritish) && (kbGetTechName(aiHCCardsGetCardTechID(card)) == "HCMusketeerGrenadierDamageBritish") ) ||
@@ -12611,7 +12600,7 @@ void setShipValue(void)
    	     {
    		    age = aiHCDeckGetCardAgePrereq(gDefaultDeck, i);
    		    if (kbGetTechName(aiHCDeckGetCardTechID(gDefaultDeck, i)) == "HCXPShipDogsoldiersTeam1")
-			   totalValue = 904;
+			   totalValue = 906;
 		    else if ((kbGetTechName(aiHCDeckGetCardTechID(gDefaultDeck, i)) == "HCXPBuccaneers") &&
 				(mapType > 400))
    			   totalValue = 202;
@@ -12666,14 +12655,12 @@ void setShipValue(void)
    			   totalValue = 200;
 			else if (kbGetTechName(aiHCDeckGetCardTechID(gDefaultDeck, i)) == "HCImprovedLongbows")
 	   		   totalValue = 899;
-			else if (kbGetTechName(aiHCDeckGetCardTechID(gDefaultDeck, i)) == "HCShipCoinCrates3")
-	   		   totalValue = 602;
 			else if (kbGetTechName(aiHCDeckGetCardTechID(gDefaultDeck, i)) == "HCShipFoodCrates3")
-	   		   totalValue = 603;
+	   		   totalValue = 601;
 			else if (kbGetTechName(aiHCDeckGetCardTechID(gDefaultDeck, i)) == "HCShipWoodCrates2")
-	   		   totalValue = 604;
+	   		   totalValue = 602;
 			else if (kbGetTechName(aiHCDeckGetCardTechID(gDefaultDeck, i)) == "HCShipWoodCrates3")
-	   		   totalValue = 605;
+	   		   totalValue = 603;
 			else if (kbGetTechName(aiHCDeckGetCardTechID(gDefaultDeck, i)) == "HCShipFalconets3")
 	   		   totalValue = 903;
 		    else if (kbGetTechName(aiHCDeckGetCardTechID(gDefaultDeck, i)) == "HCXPShipHorseArtillery2")
@@ -12983,9 +12970,9 @@ void shipGrantedHandler(int parm=-1) // Event handler
       aiEcho("We're aging up, delaying this shipment until then.");
 	  if(cMyCiv == cCivFrench && kbGetAge() == cAge2)
          aiEcho("pass.");
-	  else if(cMyCiv == cCivGermans && kbGetAge() == cAge2)
-         aiEcho("pass.");
 	  else if(cMyCiv == cCivPortuguese && kbGetAge() == cAge2)
+         aiEcho("pass.");
+	  else if(cMyCiv == cCivGermans && kbGetAge() == cAge2)
          aiEcho("pass.");
 	  else
 	     return;
@@ -13024,8 +13011,6 @@ void shipGrantedHandler(int parm=-1) // Event handler
 	if ((count == 3) && (cMyCiv == cCivChinese) && (kbGetAge() < cAge3 || kbResourceGet(cResourceGold) < 1000) && (xsGetTime() < 450000))
 		return;
 	if ((count == 3) && (cMyCiv == cCivIndians) && (kbGetAge() < cAge3 || kbResourceGet(cResourceFood) < 600) && (xsGetTime() < 450000))
-		return;
-	if ((count == 7) && (cMyCiv == cCivPortuguese) && (kbGetAge() == cAge2))
 		return;
 	if((count == 3) && (cMyCiv == cCivGermans) && (kbGetAge() == cAge2))
 	  {
@@ -17168,7 +17153,7 @@ minInterval 30
    
    if(kbGetCiv() == cCivFrench && kbResourceGet(cResourceWood) < 500)
       return;
-   if(kbGetCiv() == cCivGermans && kbUnitCount(cMyID, gHouseUnit, cUnitStateAlive) < 12)
+   if(kbGetCiv() == cCivGermans && kbUnitCount(cMyID, gHouseUnit, cUnitStateAlive) < 10)
       return;
    if (kbTechGetStatus(cTechSteelTraps) == cTechStatusObtainable)
    {
@@ -17845,11 +17830,8 @@ mininterval 15
       needHouse = 2;
    else if(kbGetCiv() == cCivBritish)
       needHouse = 3;
-   else if(kbGetCiv() == cCivJapanese && kbGetPop() == 10)
-      needHouse = 1;
    else if(kbGetCiv() == cCivJapanese || kbGetCiv() == cCivXPSioux)
       needHouse = 0;
-   
    if ( (houseBuildPlanID < 0) && (kbUnitCount(cMyID, gHouseUnit, cUnitStateAlive) < needHouse) ) 
    {  // Start a new one  
       createSimpleBuildPlan(gHouseUnit, 1, 95, true, cEconomyEscrowID, kbBaseGetMainID(cMyID), 1);
@@ -18011,6 +17993,7 @@ mininterval 10
    {
       xsDisableSelf();
 	  setShipValue();
+	  //sendChatToAllies("");
    }
 }
 
@@ -18244,7 +18227,7 @@ mininterval 16
       return;
    }
    
-   if(aiRandInt(100) < 25)
+   if(aiRandInt(100) < 20)
    {
       return;
    }
@@ -18273,7 +18256,6 @@ mininterval 16
 	  
 	if (cMyCiv == cCivOttomans)
 	   numTroop = numTroop+5;
-	
 	if(numTroop < 25)
 	   return;
 	   
