@@ -11989,9 +11989,9 @@ minInterval 10
       xsDisableSelf();
       return;
    }
-   if((xsGetTime() - gAgeUpTime) < 180000 && kbGetAge() == cAge2)
+   if((xsGetTime() - gAgeUpTime) < 150000 && kbGetAge() == cAge2)
    {
-      if(cMyCiv == cCivOttomans || cMyCiv == cCivXPSioux)
+      if(cMyCiv == cCivOttomans || cMyCiv == cCivXPSioux || cMyCiv == cCivRussians)
 	  {
 	     food2 = gAgeNeedFood+500;
 		 gold2 = gAgeNeedFood+500;
