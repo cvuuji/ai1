@@ -1,14 +1,3 @@
-//================
-//new v1.1
-//-new card order base on team(have ally or not): sioux aztec china india
-//-card order adjust: sioux otto aztec
-//-new japan shrine building location calculate
-//-eco adjust: jp-shrine(wood->food), add 1000g card
-//-mil adjust: cn-lower flame thrower/hm preference
-//-else adjust: 
-//aztec danceMonitor
-//sioux lower axe rider preference age2
-//================
 
 //==============================================================================
 // Constants
